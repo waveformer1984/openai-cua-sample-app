@@ -10,8 +10,8 @@ Get started building a [Computer Using Agent (CUA)](https://platform.openai.com/
 Set up python env and install dependencies.
 
 ```shell
-python3 -m venv env
-source env/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 

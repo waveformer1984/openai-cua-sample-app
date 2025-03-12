@@ -136,15 +136,15 @@ class BasePlaywrightComputer:
     # --- Extra browser-oriented actions ---
     def goto(self, url: str) -> None:
         try:
-            self._page.goto(url)
+            return self._page.goto(url)
         except Exception as e:
             print(f"Error navigating to {url}: {e}")
 
     def back(self) -> None:
-        self._page.go_back()
+        return self._page.go_back()
 
     def forward(self) -> None:
-        self._page.go_forward()
+        return self._page.go_forward()
 
     # --- Subclass hook ---
     def _get_browser_and_page(self) -> tuple[Browser, Page]:

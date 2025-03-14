@@ -73,7 +73,13 @@ def main():
         items = []
 
         while True:
-            user_input = args.input or input("> ")
+            try:
+                user_input = args.input or input("> ")
+                if user_input == 'exit':
+                    break
+            except EOFError as e:
+                print(f"An error occurred: {e}")
+                break
             items.append({"role": "user", "content": user_input})
             output_items = agent.run_full_turn(
                 items,

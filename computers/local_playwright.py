@@ -16,7 +16,7 @@ class LocalPlaywrightComputer(BasePlaywrightComputer):
             chromium_sandbox=True,
             headless=self.headless,
             args=launch_args,
-            env={}
+            env={"DISPLAY": ":0"}
         )
         page = browser.new_page()
         page.set_viewport_size({"width": width, "height": height})

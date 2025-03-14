@@ -8,7 +8,6 @@ from computers import (
     DockerComputer,
 )
 
-
 def acknowledge_safety_check_callback(message: str) -> bool:
     response = input(
         f"Safety Check Warning: {message}\nDo you want to acknowledge and proceed? (y/n): "

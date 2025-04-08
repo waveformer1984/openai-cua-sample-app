@@ -1,5 +1,5 @@
-from .default import *
-from .contrib import *
+from . import default
+from . import contrib
 from .computer import Computer
 
 __all__ = [

@@ -10,7 +10,7 @@ class LocalPlaywrightBrowser(BasePlaywrightComputer):
         self.headless = headless
 
     def _get_browser_and_page(self) -> tuple[Browser, Page]:
-        width, height = self.dimensions
+        width, height = self.get_dimensions()
         launch_args = [
             f"--window-size={width},{height}",
             "--disable-extensions",

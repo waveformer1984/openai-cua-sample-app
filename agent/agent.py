@@ -103,7 +103,7 @@ class Agent:
             }
 
             # additional URL safety checks for browser environments
-            if self.computer.environment == "browser":
+            if self.computer.get_environment() == "browser":
                 current_url = self.computer.get_current_url()
                 check_blocklisted_url(current_url)
                 call_output["output"]["current_url"] = current_url

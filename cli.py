@@ -1,12 +1,9 @@
 import argparse
 from agent.agent import Agent
-from computers import (
-    BrowserbaseBrowser,
-    ScrapybaraBrowser,
-    ScrapybaraUbuntu,
-    LocalPlaywrightComputer,
-    DockerComputer,
-)
+from computers.config import *
+from computers.default import *
+from computers import computers_config
+
 
 def acknowledge_safety_check_callback(message: str) -> bool:
     response = input(
@@ -21,13 +18,7 @@ def main():
     )
     parser.add_argument(
         "--computer",
-        choices=[
-            "local-playwright",
-            "docker",
-            "browserbase",
-            "scrapybara-browser",
-            "scrapybara-ubuntu",
-        ],
+        choices=computers_config.keys(),
         help="Choose the computer environment to use.",
         default="local-playwright",
     )
@@ -54,16 +45,7 @@ def main():
         default="https://bing.com",
     )
     args = parser.parse_args()
-
-    computer_mapping = {
-        "local-playwright": LocalPlaywrightComputer,
-        "docker": DockerComputer,
-        "browserbase": BrowserbaseBrowser,
-        "scrapybara-browser": ScrapybaraBrowser,
-        "scrapybara-ubuntu": ScrapybaraUbuntu,
-    }
-
-    ComputerClass = computer_mapping[args.computer]
+    ComputerClass = computers_config[args.computer]
 
     with ComputerClass() as computer:
         agent = Agent(
@@ -71,7 +53,6 @@ def main():
             acknowledge_safety_check_callback=acknowledge_safety_check_callback,
         )
         items = []
-
 
         if args.computer in ["browserbase", "local-playwright"]:
             if not args.start_url.startswith("http"):
@@ -81,7 +62,7 @@ def main():
         while True:
             try:
                 user_input = args.input or input("> ")
-                if user_input == 'exit':
+                if user_input == "exit":
                     break
             except EOFError as e:
                 print(f"An error occurred: {e}")

@@ -1,13 +1,3 @@
-"""Utility helpers used by the CUA demo code.
-
-This file previously issued raw HTTP requests to the OpenAI *Responses* API
-using the ``requests`` library.  The endpoint is now available directly in the
-official ``openai`` Python SDK, so we route all calls through
-``openai.responses.create`` instead.  This removes the manual URL / header
-handling and makes it easier to take advantage of new SDK features such as
-``previous_response_id``.
-"""
-
 from __future__ import annotations
 
 import os
@@ -21,21 +11,9 @@ from urllib.parse import urlparse
 from dotenv import load_dotenv
 from PIL import Image
 
-# Official OpenAI SDK (>= 1.15) – *do not* vendor‑lock to a minor version.
 import openai
 
-# ---------------------------------------------------------------------------
-# Environment / SDK initialisation
-# ---------------------------------------------------------------------------
 
-# Load environment variables from a local ``.env`` if present.  This is a
-# no‑op when already running in an environment with the variables exported.
-load_dotenv(override=True)
-
-# Configure the OpenAI SDK from env vars.  We intentionally *do not* raise if
-# the key is missing at import time – downstream scripts may patch
-# ``openai.api_key`` dynamically (e.g. through a CLI flag) before making the
-# first request.
 openai.api_key = os.getenv("OPENAI_API_KEY", openai.api_key)
 if org := os.getenv("OPENAI_ORG"):
     openai.organization = org
